@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         val coinWatcherWork =
-            PeriodicWorkRequest.Builder(CoinPriceWatcherWorker::class.java, 10, TimeUnit.SECONDS)
+            PeriodicWorkRequest.Builder(CoinPriceWatcherWorker::class.java, 15, TimeUnit.MINUTES)
                 .setInitialDelay(15, TimeUnit.SECONDS)
                 .setConstraints(myConstraints)
                 .addTag("myWorkManager")
