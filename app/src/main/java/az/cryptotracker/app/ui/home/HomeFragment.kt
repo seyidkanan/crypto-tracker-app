@@ -1,5 +1,6 @@
 package az.cryptotracker.app.ui.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,6 +47,13 @@ class HomeFragment : Fragment(), RvItemClickListener<CoinModel> {
             }
         }
 
+        mainViewModel.apiError.observe(viewLifecycleOwner) {
+            progressDialog.dismiss()
+            if (!it.isNullOrEmpty()) {
+                showMessageDialog(it)
+            }
+        }
+
         progressDialog.startLoading()
         mainViewModel.fetchData()
     }
@@ -60,6 +68,15 @@ class HomeFragment : Fragment(), RvItemClickListener<CoinModel> {
     override fun onItemClick(coinModel: CoinModel) {
         val bundle = bundleOf("coin" to coinModel)
         findNavController().navigate(R.id.action_homeFragment_to_alertFragment, bundle)
+    }
+
+    fun showMessageDialog(str: String?) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(str)
+        builder.setCancelable(false)
+        builder.setNeutralButton("ok") { dialog, which -> dialog.dismiss() }
+        val alert: AlertDialog = builder.create()
+        alert.show()
     }
 
 }

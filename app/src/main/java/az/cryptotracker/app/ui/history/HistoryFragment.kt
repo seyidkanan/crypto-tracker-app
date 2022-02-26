@@ -1,5 +1,6 @@
 package az.cryptotracker.app.ui.history
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,7 +47,7 @@ class HistoryFragment : Fragment() {
                     historyAdapter.setCoinList(it.coinList)
                 }
                 else -> {
-                    //no data
+                    showMessageDialog("No data")
                 }
             }
         }
@@ -64,6 +65,15 @@ class HistoryFragment : Fragment() {
 
         historyAdapter = HistoryAdapter()
         recycleView.adapter = historyAdapter
+    }
+
+    fun showMessageDialog(str: String?) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(str)
+        builder.setCancelable(false)
+        builder.setNeutralButton("ok") { dialog, which -> dialog.dismiss() }
+        val alert: AlertDialog = builder.create()
+        alert.show()
     }
 
 }

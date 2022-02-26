@@ -27,6 +27,10 @@ class HomeViewModel @Inject constructor(
     val coinModelList: LiveData<ArrayList<CoinModel>>
         get() = _coinModelList
 
+    private val _apiError = MutableLiveData<String>()
+    val apiError: LiveData<String>
+        get() = _apiError
+
     fun fetchData() {
         viewModelScope.launch(Dispatchers.Main) {
             repository.fetchCoinPrice(
@@ -40,7 +44,7 @@ class HomeViewModel @Inject constructor(
                         _coinModelList.value = coinList
                     }
                     is ApiResult.Fail -> {
-                        //show error
+                        _apiError.value = "xeta bash verdi"
                     }
                 }
             }
